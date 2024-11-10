@@ -1,0 +1,17 @@
+{
+  "category.wikitools": "WikiTools",
+  "key.wikitools.gui": "Open WikiTools",
+  "key.wikitools.copyEntity": "Copy Entity",
+  "wikitools.gui.setSteve": "Set Steve",
+  "wikitools.gui.setInvisible": "Set Invisible",
+  "wikitools.gui.removeEnchants": "Remove Enchants",
+  "wikitools.gui.removeArmor": "Remove Armor",
+  "wikitools.gui.removeItem": "Remove Item",
+  "wikitools.gui.headPitch": "Head Pitch",
+  "wikitools.gui.headYaw": "Head Yaw",
+  "wikitools.gui.toggleSmallArms": "Toggle Small Arms",
+  "wikitools.gui.saveRender": "Save Render",
+  "wikitools.gui.renderPlayerSkull": "Render Player Skull",
+  "wikitools.gui.renderSkinTexture": "Render Skin Texture",
+  "wikitools.gui.copySelf": "Copy Self"
+}

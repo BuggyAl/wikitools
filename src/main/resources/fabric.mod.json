@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "wikitools",
+  "version": "${version}",
+  "name": "wikitools",
+  "description": "Minecraft mod to copy NBT and render entities",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/wikitools/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "me.buggyal.wikitools.client.WikitoolsClient"
+    ],
+    "main": [
+      "me.buggyal.wikitools.Wikitools"
+    ]
+  },
+  "mixins": [
+    "wikitools.mixins.json",
+    {
+      "config": "wikitools.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
