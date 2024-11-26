@@ -22,7 +22,7 @@ public class WRenderWidget extends WWidget {
     @Override
     public void paint(DrawContext context, int x, int y, int mouseX, int mouseY) {
         ScreenDrawing.texturedRect(context, x, y, width, height, Identifier.of("textures/block/red_concrete.png"), 0xFFFFFFFF);
-        TestRenderer.drawEntity(context, x , y, x + width, y + height, 0.5F);
+        TestRenderer.drawEntity(context, x , y, x + width, y + height, 1F);
     }
 
 }

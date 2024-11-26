@@ -5,13 +5,17 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.Framebuffer;
+import net.minecraft.client.gl.ShaderProgram;
+import net.minecraft.client.gl.ShaderProgramKey;
 import net.minecraft.client.gl.SimpleFramebuffer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
-import net.minecraft.client.render.DiffuseLighting;
+import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import org.joml.Quaternionf;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.*;
@@ -162,6 +166,47 @@ public class FramebufferHelper {
 
         renderManager.setRenderShadows(oldShadows);
         context.getMatrices().pop();
+    }
+
+    public static void renderEntityToFrameBuffer(LivingEntity entity) {
+        MinecraftClient client = MinecraftClient.getInstance();
+
+        float entityHeight = entity.getHeight();
+        float entityWidth = entity.getWidth();
+        float maxDimension = Math.max(entityHeight, entityWidth);
+
+        // Add padding to ensure the entity fits comfortably
+        int framebufferSize = (int) (maxDimension * 1.5);
+
+        // Create the framebuffer with the calculated size
+        SimpleFramebuffer framebuffer = new SimpleFramebuffer(framebufferSize, framebufferSize, true);
+
+        int FRAMEBUFFER_WIDTH = framebuffer.viewportWidth;
+        int FRAMEBUFFER_HEIGHT = framebuffer.viewportHeight;
+
+        framebuffer.setClearColor(0, 0, 0, 0);
+        if (MinecraftClient.IS_SYSTEM_MAC) framebuffer.clear();
+        framebuffer.beginWrite(false);
+
+        MatrixStack matrixStack = new MatrixStack();
+        matrixStack.translate(FRAMEBUFFER_WIDTH / 2.0, FRAMEBUFFER_HEIGHT / 2.0, 50.0);
+        matrixStack.scale(-1.0F, 1.0F, 1.0F);
+        matrixStack.scale(FRAMEBUFFER_WIDTH / 2.0F, FRAMEBUFFER_HEIGHT / 2.0F, 1.0F);
+
+        DiffuseLighting.enableGuiDepthLighting();
+        EntityRenderDispatcher entityRenderDispatcher = client.getEntityRenderDispatcher();
+        entityRenderDispatcher.setRenderShadows(false);
+        entityRenderDispatcher.render(entity, 0.0, 0.0, 0.0, 0.0F, matrixStack, client.getBufferBuilders().getEntityVertexConsumers(), 15728880);
+        entityRenderDispatcher.setRenderShadows(true);
+
+        framebuffer.endWrite();
+        framebuffer.copyDepthFrom(framebuffer);
+
+        // Bind the framebuffer texture and draw it to the screen
+        RenderSystem.setShaderTexture(0, framebuffer.getColorAttachment());
+        drawFramebufferToScreen(windowWidth, windowHeight);
+
+        framebuffer.delete();
     }
 
 }

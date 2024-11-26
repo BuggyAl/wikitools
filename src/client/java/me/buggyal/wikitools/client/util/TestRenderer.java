@@ -32,10 +32,12 @@ public class TestRenderer {
         entity.prevHeadYaw = entity.getYaw();
 
         float entityScale = entity.getScale();
-        //Vector3f positionOffset = new Vector3f(0.0F, 0F, 0.0F);
-        Vector3f positionOffset = new Vector3f(0.0F, entity.getHeight() / entityScale / 2, 0.0F);
-        float adjustedScale = 1 / entityScale * 100 * scale;
+        float entityHeight = entity.getHeight();
+        float adjustedScale = 1 / entityScale * 100;
+
+        Vector3f positionOffset = new Vector3f(0.0F, entityHeight / entityScale / 2, 0.0F);
         drawEntity(context, centerX, centerY, adjustedScale, positionOffset, entity);
+
         entity.bodyYaw = originalBodyYaw;
         entity.setYaw(originalYaw);
         entity.setPitch(originalPitch);

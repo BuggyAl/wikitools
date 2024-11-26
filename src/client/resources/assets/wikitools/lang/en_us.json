@@ -13,5 +13,7 @@
   "wikitools.gui.saveRender": "Save Render",
   "wikitools.gui.renderPlayerSkull": "Render Player Skull",
   "wikitools.gui.renderSkinTexture": "Render Skin Texture",
-  "wikitools.gui.copySelf": "Copy Self"
+  "wikitools.gui.copySelf": "Copy Self",
+  "wikitools.gui.resetHeadPitch": "Reset Pitch",
+  "wikitools.gui.resetHeadYaw": "Reset Yaw"
 }
